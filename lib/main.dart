@@ -44,77 +44,175 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String _typing = "";
+  String _operator = "";
+  String num1 = "";
+  String num2 = "";
+  String temp = "";
+  int result = 0;
 
-  void _incrementCounter() {
+
+
+  void updateCalc() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
     });
   }
 
-  void _zero() {
-    return;
+  void _calculate() {
+    temp = num1;
+    num1 = num2;
+    num2 = temp;
+    if(_operator == "+")
+    {
+      result = int.parse(num1) + int.parse(num2);
+    }
+    else if (_operator == "-")
+    {
+      result = int.parse(num1) - int.parse(num2);
+    }
+    else if (_operator == "*")
+    {
+      result = int.parse(num1) * int.parse(num2);
+    }
+    else {
+        result = int.parse(num1) ~/ int.parse(num2);
+    }
+    num1 = result.toString();
   }
-  
+
+  void _zero() {
+    _typing+="0";
+    num1+="0";
+    setState(() {});
+  }
+
   void _one() {
-    return;
+    _typing+="1";
+    num1+="1";
+    print(num1);
+
+    setState(() {});
   }
 
   void _two() {
-    return;
+    _typing+="2";
+    num1+="2";
+    print(num1);
+
+    setState(() {});
   }
 
   void _three() {
-    return;
+    _typing+="3";
+    num1+="3";
+    print(num1);
+
+    setState(() {});
   }
 
   void _four() {
-    return;
+    _typing+="4";
+    num1+="4";
+    setState(() {});
+    print(num1);
+
   }
 
   void _five() {
-    return;
+    _typing+="5";
+    num1+="5";
+    print(num1);
+
+    setState(() {});
   }
 
   void _six() {
-    return;
+    _typing+="6";
+    num1+="6";
+    print(num1);
+
+    setState(() {});
   }
 
   void _seven() {
-    return;
+    _typing+="7";
+    num1+="7";
+    print(num1);
+
+    setState(() {});
   }
 
   void _eight() {
-    return;
+    _typing+="8";
+    num1+="8";
+    setState(() {});
+    print(num1);
+
   }
 
   void _nine() {
-    return;
+    _typing+="9";
+    num1+="9";
+    setState(() {});
+    print(num1);
   }
 
   void _add() {
-    return;
+    _typing = "";
+    _operator = "+";
+    num2 = num1;
+    num1="";
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    setState(() {});
   }
 
   void _sub() {
-    return;
+    _typing = "";
+    _operator = "-";
+    num2 = num1;
+    num1="";
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    setState(() {});
   }
 
   void _mult() {
-    return;
+    _typing = "";
+    _operator = "*";
+    num2 = num1;
+    num1="";
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    setState(() {});
   }
 
   void _divide() {
-    return;
+    _typing = "";
+    _operator = "/";
+    num2 = num1;
+    num1="";
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    setState(() {});
   }
 
   void _equals() {
-    return;
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    _calculate();
+    print("NUM1: "+num1);
+    print("NUM2: "+num2);
+    _typing = result.toString();
+    setState(() {
+    });
+  }
+
+  void _clear() {
+    _typing = "";
+    num1 = "";
+    num2 = "";
+    setState(() {});
   }
 
   @override
@@ -128,12 +226,15 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
-              child: Text("TYPING"),
-            ),
-            Container(
-              child: Text("ANSWER")
+              child: Text(_typing,
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 70,
+                )),
+              alignment: Alignment.centerRight,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _button("1", _one),
                 _button("2", _two),
@@ -142,6 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _button("4", _four),
                 _button("5", _five),
@@ -150,6 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _button("7", _seven),
                 _button("8", _eight),
@@ -158,9 +261,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _button("0", _zero),
                 _button("/", _divide),
+                _button("C", _clear),
+                _button("X", _mult),
               ],
             ),
           ],
@@ -172,7 +278,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Widget _button(String num, Function() f)
 {
-  return MaterialButton(
+  return RaisedButton(
     child: Text(num),
+    onPressed: () => f(),
   );
 }
